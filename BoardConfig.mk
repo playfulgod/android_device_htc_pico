@@ -1,61 +1,92 @@
-# Copyright (C) 2009 The Android Open Source Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Thunderg Board
+TARGET_BOARD_PLATFORM := msm7k
+TARGET_ARCH_VARIANT := armv7-vfp
+TARGET_CPU_ABI := armeabi-v7l
+TARGET_CPU_ABI2 := armeabi
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
-#
-# This file sets variables that control the way modules are built
-# thorughout the system. It should not be used to conditionally
-# disable makefiles (the proper piconism to control what gets
-# included in a build is to use PRODUCT_PACKAGES in a product
-# definition file).
-#
-
-# WARNING: This line must come *before* including the proprietary
-# variant, so that it gets overwritten by the parent (which goes
-# against the traditional rules of inheritance).
-USE_CAMERA_STUB := true
-
-# inherit from common msm7x27 device
--include device/htc/msm7x27-common/BoardConfigCommon.mk
-
-# inherit from the proprietary version
--include vendor/htc/pico/BoardConfigVendor.mk
-
+# Board identifier
 TARGET_BOOTLOADER_BOARD_NAME := pico
+TARGET_OTA_ASSERT_DEVICE := pico
 
-# Use stock libril for now
-TARGET_PROVIDES_LIBRIL := vendor/htc/pico/proprietary/libril.so
-BOARD_MOBILEDATA_INTERFACE_NAME := "rmnet_sdio0"
-BOARD_HAS_EXTRA_SYS_PROPS := true
-USE_IPV6_ROUTE := true
+# Target Boot & Recovery
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
+TARGET_NO_RECOVERY := true
 
-# GPS Defines
+# Audio
+TARGET_PROVIDES_LIBAUDIO := true
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+
+# Browser
+JS_ENGINE := v8
+
+# Camera
+USE_CAMERA_STUB := false
+
+# DexPreOpt
+WITH_DEXPREOPT := true
+
+# FM Radio
+# BOARD_FM_DEVICE := bcm4330
+BOARD_HAVE_FM_RADIO := true
+BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
+
+# GPS
+BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := pico
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 585101312
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 1232072704
-BOARD_BOOTIMAGE_PARTITION_SIZE := 4194304
-BOARD_FLASH_BLOCK_SIZE := 262144
+# Graphics
+BOARD_EGL_CFG := vendor/htc/pico/proprietary/egl.cfg
+BOARD_NO_RGBX_8888 := true
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+TARGET_DO_NOT_SETS_CAN_DRAW := true
+TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
+TARGET_SF_NEEDS_REAL_DIMENSIONS := true
+TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
-TARGET_PREBUILT_KERNEL := device/htc/pico/kernel
-TARGET_USERIMAGES_USE_EXT4 := true
-BOARD_KERNEL_CMDLINE := no_console_suspend=1
+# JIT
+WITH_JIT := true
+ENABLE_JSC_JIT := true
+
+# Kernel
 BOARD_KERNEL_BASE := 0x12c00000
-BOARD_PAGE_SIZE := 4096
+BOARD_KERNEL_CMDLINE := mem=471M console=ttyMSM2,115200n8 androidboot.hardware=thunderg
+BOARD_PAGE_SIZE := 0x00000800
 
-BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_HAS_NO_SELECT_BUTTON := true
-BOARD_SDEXT_DEVICE := /dev/block/mmcblk0p2
-BOARD_USES_MMCUTILS := true
+# Qualcomm
+BOARD_USES_QCOM_HARDWARE := true
+BOARD_USES_QCOM_LIBS := true
+BOARD_USES_QCOM_LIBRPC := true
+
+# Target Misc.
+TARGET_PROVIDES_INIT_TARGET_RC := true
+#TARGET_PROVIDES_LIBRIL := true
+
+# WiFi
+BOARD_WLAN_DEVICE := bcm4325
+BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+WPA_SUPPLICANT_VERSION := VER_0_5_X
+WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/bcm4330.ko"
+WIFI_DRIVER_MODULE_NAME := wireless
+WIFI_DRIVER_HAS_LGE_SOFTAP := true
+
+#dev:    size   erasesize  name
+#mtd0: 00440000 00020000 "boot"
+#mtd1: 0be00000 00020000 "system"
+#mtd2: 00500000 00020000 "recovery"
+#mtd3: 002c0000 00020000 "lgdrm"
+#mtd4: 00100000 00020000 "splash"
+#mtd5: 00180000 00020000 "FOTABIN"
+#mtd6: 005c0000 00020000 "FOTA"
+#mtd7: 00040000 00020000 "misc"
+#mtd8: 04000000 00020000 "cache"
+#mtd9: 0c780000 00020000 "userdata"
+
+BOARD_BOOTIMAGE_PARTITION_SIZE := 4194304
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 246677504
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 157286400
+BOARD_FLASH_BLOCK_SIZE := 262144

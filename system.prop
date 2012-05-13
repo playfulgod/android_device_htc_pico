@@ -114,28 +114,3 @@ ro.bt.stack.version	= 2.2.017
 #0x10000010010100100000011 represent bt profile list
 ro.bt.profiles	= 4270339
 
-# Properties of BTLA stack
-service.brcm.bt.activation = 0
-service.brcm.bt.srv_active = 0
-service.brcm.bt.hcid_active = 0
-service.brcm.bt.btld = 0
-service.brcm.bt.btld_pid = 0
-service.brcm.bt.avrcp_pass_thru = 0
-service.brcm.bt.avrcp_toggle = 1
-service.brcm.bt.local_name =
-
-# AOLC
-htc.audio.alc.enable = true
-
-# Following property will be reference by Settings.
-ro.product.processor=1307MHz
-ro.product.ram=512MB
-ro.product.display_resolution=3.2 inch HVGA resolution
-ro.product.main_camera=3M
-ro.product.front_camera=NA
-ro.product.bluetooth= 3.0
-ro.product.wifi = 802.11 b/g/n
-
-# update the acoustic table for 7227/7225 NEL lab testing
-ro.ril.update.acoustic.table = 1
-
